@@ -8,13 +8,13 @@ from dotenv import load_dotenv
 import os
 
 from dotenv import *
-
+from flask import jsonify
 import google.generativeai as genai
 import google.ai.generativelanguage as glm
 from google.generativeai.types.content_types import *
 from PIL import Image
 from backend import query_prices
-
+import json
 
 
 VISION_GDCH_ENDPOINT = "vision.googleapis.com"
@@ -103,7 +103,7 @@ def generate_description(out):
     genai.configure(api_key=GOOGLE_API_KEY)
     
     model = genai.GenerativeModel("gemini-pro")
-    responses = model.generate_content([out, "Get the name of the proc/cpt code which and the price(without dollar sign) which is after the proc code. Output a json in the following format (proc code: price)"])
+    responses = model.generate_content([out, "Get the name of the proc/cpt code which and the price(without dollar sign) which is after the proc code. Output a json in the following format {proc code: price}. Don't include ```json or anything else. ALso do not include newline characters."])
     
     return responses.text
 def main():
@@ -111,10 +111,11 @@ def main():
     with open(image_path, "rb") as image_file:
         imgbase64 = base64.b64encode(image_file.read()).decode("utf-8")
     fin=generate_description(out=get_text(imgbase64, ACCESS_TOKEN))
-    print(fin)
+    fin_json = json.loads(fin)
     url = 'http://127.0.0.1:5000/query-prices'
-    ffin={'insurance_provider':"UNITED HEALTHCARE", "procedures": fin}
-    requests.post(url, json=fin)
+    ffin={'insurance_provider':'UNITED HEALTHCARE', 'procedures': fin_json}
+    return_json = requests.post(url, json=ffin)
+    print(return_json.text)
 
 if __name__ == "__main__":
     main()
