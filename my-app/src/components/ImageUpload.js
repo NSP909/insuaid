@@ -14,7 +14,7 @@ const UploadAndDisplayImage = () => {
     }
 
     const formData = new FormData();
-    formData.append("file", selectedImage); // "file" for backend endpoint 
+    formData.append("image", selectedImage); // "file" for backend endpoint 
 
     // use HTTP response to send data 
     try {
