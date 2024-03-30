@@ -10,9 +10,17 @@ import base64
 import json
 from ocr import get_text_from_image
 from flask_cors import CORS
+from pymongo import MongoClient
+
 
 load_dotenv()
 
+uri=os.getenv("mongo")
+
+
+cluster = MongoClient(uri)
+db = cluster['data']
+collection = db["users"]
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
@@ -77,6 +85,25 @@ def process_image():
     else:
         # If the request was not successful, return an appropriate error response
         return jsonify({'error': 'Failed to process the image'}), 500
+
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    # Get user data from the request
+    user_data = request.json
+    if not user_data:
+        return jsonify({"error": "No user data provided"}), 400
+
+    # Check if the user already exists in the database
+    existing_user = collection.find_one({"email": user_data.get("email")})
+    if existing_user:
+        return "user exists"
+
+    # Insert the user into the database
+    result = collection.insert_one(user_data)
+    if result.inserted_id:
+        return jsonify({"message": "User added successfully"}), 201
+    else:
+        return jsonify({"error": "Failed to add user"}), 500
 
 if __name__ == '__main__':
     app.run(debug = True)
