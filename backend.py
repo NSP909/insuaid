@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, url_for
 import requests
 from faster_whisper import WhisperModel
 import torch
@@ -6,6 +6,9 @@ from TTS.api import TTS
 from dotenv import load_dotenv
 import google.generativeai as genai
 import os
+import base64
+import json
+from ocr import get_text_from_image
 
 load_dotenv()
 
@@ -29,7 +32,6 @@ def query_prices():
     insurance_provider = procedure_json['insurance_provider']
     dict = {}
     for procedure in procedure_json['procedures']:
-        print(procedure)
         answer = requests.get("https://www.dolthub.com/api/v1alpha1/dolthub/hospital-price-transparency/master?q=SELECT+Avg%28price%29%0AFROM+%60prices%60+WHERE+CODE%3D\"{}\"+AND+payer+LIKE+\"%25{}%25\"+LIMIT+1000%3B".format(procedure, insurance_provider))
         answer = answer.json()
         dict[procedure] =  float(answer['rows'][0]['Avg(price)']) - float(procedure_json['procedures'][procedure])
@@ -50,7 +52,18 @@ def process_audio():
 
     tts.tts_to_file(response.text, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
 
-    return final_text, response.text, "sample_output.wav"
+    return "sample_output.wav"
+
+@app.route('/image', methods=['POST'])
+def process_image():
+    image = request.files['image']
+    insurance = request.form['insurance']
+    imgbase64 = base64.b64encode(image.read()).decode("utf-8")
+    description = get_text_from_image(imgbase64)
+    description_json = json.loads(description)
+    data = {'insurance_provider': insurance, 'procedures': description_json}
+    reponse = requests.post("http://127.0.0.1:5000/query-prices", json=data)
+    return reponse.text
 
 if __name__ == '__main__':
     app.run(debug = False)

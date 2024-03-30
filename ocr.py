@@ -13,7 +13,6 @@ import google.generativeai as genai
 import google.ai.generativelanguage as glm
 from google.generativeai.types.content_types import *
 from PIL import Image
-from backend import query_prices
 import json
 
 
@@ -103,19 +102,20 @@ def generate_description(out):
     genai.configure(api_key=GOOGLE_API_KEY)
     
     model = genai.GenerativeModel("gemini-pro")
-    responses = model.generate_content([out, "Get the name of the proc/cpt code which and the price(without dollar sign) which is after the proc code. Output a json in the following format {proc code: price}. Don't include ```json or anything else. ALso do not include newline characters."])
+    responses = model.generate_content([out, "Get the name of the proc/cpt code which and the price(without dollar sign) which is after the proc code. Output a json in the following format {\"proc code\": \"price\"}. Don't include ```json or anything else. ALso do not include newline characters."])
     
     return responses.text
-def main():
-    image_path = "insuaid/documents/doc2.jpg"
-    with open(image_path, "rb") as image_file:
-        imgbase64 = base64.b64encode(image_file.read()).decode("utf-8")
-    fin=generate_description(out=get_text(imgbase64, ACCESS_TOKEN))
-    fin_json = json.loads(fin)
-    url = 'http://127.0.0.1:5000/query-prices'
-    ffin={'insurance_provider':'UNITED HEALTHCARE', 'procedures': fin_json}
-    return_json = requests.post(url, json=ffin)
-    print(return_json.text)
 
-if __name__ == "__main__":
-    main()
+def get_text_from_image(image):
+    return generate_description(out=get_text(image, ACCESS_TOKEN))
+
+# def main():
+#     image_path = "insuaid/documents/doc2.jpg"
+#     with open(image_path, "rb") as image_file:
+#         imgbase64 = base64.b64encode(image_file.read()).decode("utf-8")
+#     fin=generate_description(out=get_text(imgbase64, ACCESS_TOKEN))
+#     fin_json = json.loads(fin)
+#     url = 'http://127.0.0.1:5000/query-prices'
+#     ffin={'insurance_provider':'UNITED HEALTHCARE', 'procedures': fin_json}
+#     return_json = requests.post(url, json=ffin)
+#     print(return_json.text)
