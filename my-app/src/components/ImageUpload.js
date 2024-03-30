@@ -15,21 +15,22 @@ const UploadAndDisplayImage = () => {
 
     const formData = new FormData();
     formData.append("image", selectedImage); // "file" for backend endpoint 
+    formData.append("insurance", "UNITED HEALTHCARE");
 
     // use HTTP response to send data 
     try {
-      const response = await fetch("/image", { // replace with endpoint URL
+      const response = await fetch("http://127.0.0.1:5000/image", { // replace with endpoint URL
         method: "POST",
         body: formData,
       });
 
+      console.log("Response from backend:", response);
       // if no correct status code, throw error 
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        throw new Error("Failed to upload image");
       }
-
-      const result = await response.json();
-      console.log("Upload successful", result);
+      const textData = await response.json();
+      console.log("Received JSON from backend:", textData);
 
       // todo: handle success response 
       // need to send something to user indicating such 

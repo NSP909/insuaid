@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, Response
 import requests
 from faster_whisper import WhisperModel
 import torch
@@ -9,6 +9,7 @@ import os
 import base64
 import json
 from ocr import get_text_from_image
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -25,6 +26,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 gemini_model = genai.GenerativeModel("gemini-pro")
 
 app = Flask(__name__)
+
+CORS(app, origins="*")
 
 @app.route('/query-prices', methods=['POST'])
 def query_prices():
@@ -67,8 +70,13 @@ def process_image():
     description = get_text_from_image(imgbase64)
     description_json = json.loads(description)
     data = {'insurance_provider': insurance, 'procedures': description_json}
-    reponse = requests.post("http://127.0.0.1:5000/query-prices", json=data)
-    return reponse.text
+    response = requests.post("http://127.0.0.1:5000/query-prices", json=data)
+    if response.status_code == 200:
+        # Return a JSON response with the data obtained from the query-prices endpoint
+        return Response(response=response.text, status=response.status_code, content_type='application/json')
+    else:
+        # If the request was not successful, return an appropriate error response
+        return jsonify({'error': 'Failed to process the image'}), 500
 
 if __name__ == '__main__':
-    app.run(debug = False)
+    app.run(debug = True)
