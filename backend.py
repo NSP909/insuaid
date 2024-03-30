@@ -3,6 +3,8 @@ import requests
 from faster_whisper import WhisperModel
 import torch
 from TTS.api import TTS
+import google.generativeai as genai
+import os
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -12,6 +14,8 @@ model_size = "medium"
 model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
 
 app = Flask(__name__)
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 @app.route('/query-prices', methods=['POST'])
 def query_prices():
@@ -35,12 +39,15 @@ def process_audio():
     for segment in segments:
         final_text += segment.text
 
+
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel("gemini-pro")
+    response = model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out whether the hospital overcharged them and suggest further course of action based on the information the user gives."])
     #ping gemini for the answer
-    sample_text = "This is a sample output from gemini. I am seeing how good the TTS is at this job."
 
-    tts.tts_to_file(sample_text, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
+    tts.tts_to_file(response, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
 
-    return final_text
+    return final_text, response, "sample_output.wav"
 
 if __name__ == '__main__':
     app.run(debug = False)
