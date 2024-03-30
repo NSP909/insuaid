@@ -4,13 +4,13 @@ import InsuranceInfoForm from './insuranceRequest';
 import SplitScreen from './splitScreen';
 import { FaMoneyBillAlt } from 'react-icons/fa';
 
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
       <SplitScreen
       right={<div>
-        
         <h1> Medical Bill Errors </h1>
         </div>}
       left=
