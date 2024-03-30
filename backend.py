@@ -34,7 +34,12 @@ def query_prices():
     for procedure in procedure_json['procedures']:
         answer = requests.get("https://www.dolthub.com/api/v1alpha1/dolthub/hospital-price-transparency/master?q=SELECT+Avg%28price%29%0AFROM+%60prices%60+WHERE+CODE%3D\"{}\"+AND+payer+LIKE+\"%25{}%25\"+LIMIT+1000%3B".format(procedure, insurance_provider))
         answer = answer.json()
-        dict[procedure] =  float(answer['rows'][0]['Avg(price)']) - float(procedure_json['procedures'][procedure])
+        inner_dict = {}
+        inner_dict['cost_difference'] =  float(answer['rows'][0]['Avg(price)']) - float(procedure_json['procedures'][procedure])
+        inner_dict['avg_cost'] = float(answer['rows'][0]['Avg(price)'])
+        inner_dict['your_cost'] = procedure_json['procedures'][procedure]
+        inner_dict['percent_difference'] = (inner_dict['cost_difference'] / float(procedure_json['procedures'][procedure])) * 100
+        dict[procedure] = inner_dict
     return jsonify(dict)
 
 @app.route('/process-audio', methods=['POST'])
