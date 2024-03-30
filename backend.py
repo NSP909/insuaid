@@ -3,19 +3,25 @@ import requests
 from faster_whisper import WhisperModel
 import torch
 from TTS.api import TTS
+from dotenv import load_dotenv
 import google.generativeai as genai
 import os
+
+load_dotenv()
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 
 model_size = "medium"
-model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
-
-app = Flask(__name__)
+audio_model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+genai.configure(api_key=GEMINI_API_KEY)
+gemini_model = genai.GenerativeModel("gemini-pro")
+
+app = Flask(__name__)
 
 @app.route('/query-prices', methods=['POST'])
 def query_prices():
@@ -34,20 +40,17 @@ def process_audio():
     request.files['audio'].save("audio.mp3")
 
     # Use FasterWhisper to convert audio to text
-    segments, info = model.transcribe("audio.mp3", beam_size=5)
+    segments, info = audio_model.transcribe("audio.mp3", beam_size=5)
     final_text = ""
     for segment in segments:
         final_text += segment.text
 
-
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-pro")
-    response = model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out whether the hospital overcharged them and suggest further course of action based on the information the user gives."])
+    response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not over explain things."])
     #ping gemini for the answer
 
-    tts.tts_to_file(response, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
+    tts.tts_to_file(response.text, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
 
-    return final_text, response, "sample_output.wav"
+    return final_text, response.text, "sample_output.wav"
 
 if __name__ == '__main__':
     app.run(debug = False)
