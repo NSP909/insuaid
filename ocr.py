@@ -107,7 +107,7 @@ def generate_description(out):
     
     return responses.text
 def main():
-    image_path = "insuaid/documents/doc1.png"
+    image_path = "insuaid/documents/doc2.jpg"
     with open(image_path, "rb") as image_file:
         imgbase64 = base64.b64encode(image_file.read()).decode("utf-8")
     fin=generate_description(out=get_text(imgbase64, ACCESS_TOKEN))
