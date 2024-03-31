@@ -120,6 +120,11 @@ def overcharge_chat():
         directions_contents = file.read()
         # Add contents to a string or perform any other operations
 
+    if "generate" in final_text and "letter" in final_text:
+        return_text = generate_text(str(data_json))
+        generate_letter_pdf(return_text, "letter.pdf")
+        return return_text
+
     print(final_text)
 
     if "generate" in final_text and "letter" in final_text:
