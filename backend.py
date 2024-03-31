@@ -100,7 +100,7 @@ def process_audio():
 
 @app.route("/get-audio", methods = ['GET'])
 def get_audio():
-    return send_file("insuaid/my-app/src/componenets/sample_output.wav")
+    return send_file("sample_output.wav")
 
 @app.route('/overcharge-chat', methods=['POST'])
 def overcharge_chat():
