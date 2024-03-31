@@ -4,7 +4,7 @@ import InsuranceInfoForm from './insuranceRequest';
 import SplitScreen from './splitScreen';
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-
+import Button from './Button';
 
 function UploadImagePage() {
 
@@ -15,7 +15,7 @@ function UploadImagePage() {
       
       <div>
         <UploadAndDisplayImage> </UploadAndDisplayImage>
-        <AudioRecorder/>  
+        <Button to="/talkbot">Go to Talkbot</Button>
 
       </div>
     
