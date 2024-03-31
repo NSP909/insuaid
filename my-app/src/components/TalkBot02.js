@@ -26,7 +26,7 @@ const TalkBot02 = () => {
             const formData = new FormData();
             formData.append("audio", blob);
 
-            fetch("http://127.0.0.1:5000/process-audio", {
+            fetch("http://127.0.0.1:5000/overcharge-chat", {
               method: "POST",
               body: formData,
             })

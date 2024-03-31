@@ -101,11 +101,12 @@ def get_audio():
 @app.route('/overcharge-chat', methods=['POST'])
 def overcharge_chat():
     request.files['audio'].save("audio.mp3")
-    history = request.form['history']
+    #history = request.form['history']
     # with open("tp.json") as f:
     #     data_json = json.load(f)
     #     f.close()
     # data = json.dumps(data_json)
+    history=""
     data_json = get_history()
     data_json=data_json['procedures']
     
@@ -137,7 +138,7 @@ def overcharge_chat():
                                               str(data_json), "This is the user's query: " + final_text, "This was your previous answer (ignore if empty): " + history, "Suggest writing a letter to the hospital's billing department to request a refund for the overcharge.", "This is a set of general directions that the user can do to help with the overcharge: " + directions_contents])
     #ping gemini for the answer
 
-    tts_output_path = os.path.join("/insuaid/sample_output.wav")
+    tts_output_path = r"C:\Users\sange\OneDrive\Desktop\hackp\sample_output.wav"
     print(tts_output_path)
     tts.tts_to_file(response.text, file_path=tts_output_path)
 
