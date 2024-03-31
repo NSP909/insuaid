@@ -9,7 +9,7 @@ const InsuranceForm = () => {
   const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const {user} = useAuth0();
+  const { user } = useAuth0();
   const email = user.email;
 
   const handleSubmit = async (event) => {
@@ -35,6 +35,7 @@ const InsuranceForm = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      console.log(response);
 
       // If submission is successful, set submitted to true
       setSubmitted(true);
@@ -53,28 +54,31 @@ const InsuranceForm = () => {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="centered-form">
-      <div className="form-group">
-      <label htmlFor="insuranceName">Insurance Name:</label>
-      <input
-        type="text"
-        id="insuranceName"
-        value={insuranceName}
-        onChange={(e) => setInsuranceName(e.target.value)}
-        required
-        className="form-control"
-      />
-      </div>
-      <div className="form-group">
-        <label htmlFor="address">Address:</label>
-        <input
-          type="text"
-          id="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          required
-          className="form-control"
-        />
-      </div>
+        <div className="form-group">
+          <label htmlFor="insuranceName">Insurance Name:</label>
+          <input
+            type="text"
+            id="insuranceName"
+            value={insuranceName}
+            onChange={(e) => setInsuranceName(e.target.value)}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <input
+            type="text"
+            id="address"
+            value={address}
+            onChange={(e) => {
+              setAddress(e.target.value);
+              console.log('Address:', e.target.value); // Log the address value
+            }}
+            required
+            className="form-control"
+          />
+        </div>
         {/* Submit button */}
         <div className="button-container">
           <button type="submit" className="submit-button">Submit</button>

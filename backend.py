@@ -136,10 +136,15 @@ def overcharge_chat():
 @app.route('/update_email', methods=['POST'])
 def update_email():
     data=request.json
-    print(data['email'])
+    print(data)
     global emailid
     emailid=data['email']
-    return "email updated"
+    global address
+    address=data['address']
+    global insurance
+    insurance=data['insuranceName']
+    print(emailid,address,insurance)
+    return "updated"
     
 @app.route('/image', methods=['POST'])
 def process_image():
