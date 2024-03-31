@@ -5,6 +5,7 @@ const TalkBot02 = () => {
   const [responseText, setResponseText] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
 
   const handleRecording = () => {
     if (!isRecording) {
@@ -30,15 +31,25 @@ const TalkBot02 = () => {
               method: "POST",
               body: formData,
             })
-              .then((response) => response.blob())
+              .then((response) => {
+                if (response.headers.get("content-type") === "application/pdf") {
+                  // If response is a PDF file, set the PDF URL
+                  setPdfUrl(URL.createObjectURL(response.blob()));
+                } else {
+                  // If response is not a PDF, assume audio file and play it
+                  return response.blob();
+                }
+              })
               .then((blob) => {
-                const audio = new Audio(URL.createObjectURL(blob));
-                audio.play();
-                setIsPlaying(true);
-                // Set a timeout to reset isPlaying state after the audio finishes playing
-                audio.addEventListener("ended", () => {
-                  setIsPlaying(false);
-                });
+                if (blob) {
+                  const audio = new Audio(URL.createObjectURL(blob));
+                  audio.play();
+                  setIsPlaying(true);
+                  // Set a timeout to reset isPlaying state after the audio finishes playing
+                  audio.addEventListener("ended", () => {
+                    setIsPlaying(false);
+                  });
+                }
               })
               .catch((err) =>
                 console.error("Error processing and playing audio:", err)
@@ -77,6 +88,8 @@ const TalkBot02 = () => {
           </button>
         )}
       </div>
+      {/* Conditionally render the PDF */}
+      {pdfUrl && <iframe src={pdfUrl} width="100%" height="500px" />}
     </div>
   );
 };
