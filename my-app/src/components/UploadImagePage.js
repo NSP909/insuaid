@@ -37,12 +37,8 @@ function UploadImagePage() {
   return (
     <div className="App">
       <header className="App-header">
-      <SplitScreen
-      right={<div>
-        <h1> Medical Bill Errors </h1>
-        </div>}
-      left=
-      {<div>
+      
+      <div>
         <FaMoneyBillAlt size={150} /> 
         <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
         <h2> Medical Bill Error Detector </h2> 
@@ -51,8 +47,8 @@ function UploadImagePage() {
         <InsuranceInfoForm /> 
         <AudioRecorder/>  
 
-      </div>}
-    />
+      </div>
+    
       </header>
     </div>
   );
