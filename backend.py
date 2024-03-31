@@ -23,7 +23,7 @@ db = cluster['data']
 collection = db["users"]
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+tts = TTS(model_name="tts_models/en/ek1/tacotron2", progress_bar=False).to(device)
 
 model_size = "medium"
 audio_model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
@@ -63,10 +63,10 @@ def process_audio():
     for segment in segments:
         final_text += segment.text
 
-    response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not over explain things."])
+    response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not exceed more than two sentences."])
     #ping gemini for the answer
 
-    tts.tts_to_file(response.text, speaker_wav = "target/the_wolf_of_wall_street_speech-cut.wav", language="en", file_path="sample_output.wav")
+    tts.tts_to_file(response.text, file_path="sample_output.wav")
 
     return "sample_output.wav"
 
@@ -106,4 +106,4 @@ def add_user():
         return jsonify({"error": "Failed to add user"}), 500
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)
