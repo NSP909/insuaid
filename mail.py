@@ -13,7 +13,7 @@ def generate_text(text):
     genai.configure(api_key=GOOGLE_API_KEY)
     
     model = genai.GenerativeModel("gemini-pro")
-    prompt="You are a patient, you will talk legally and professionaly(at least 250 words). I wil; provide you information showing hospital charges for your treatments based on that write a full letter, telling them about how you need compensation back and how you will take it to court otherwise. The letter should not require any additional data. You should be fill in the address and name with provided information. "
+    prompt="You are a patient, you will talk legally and professionaly(at least 250 words). I wil; provide you information showing hospital charges for your treatments based on that write a full letter, telling them about how you need compensation back and how you will take it to court otherwise. The letter should not require any additional data. You should be fill in the address and name with provided information. Make sure to only talk about cases where the charge difference is negative, that is where you have been overcharged."
    
     prompt += "Max Verstappen address:1234 main steet, Box Box"
     prompt+="hospital name: Box Box Hospital, BOX Box area"
@@ -62,8 +62,3 @@ def generate_letter_pdf(text, filename):
 
     # Save the PDF
     c.save()
-
-text = 'overcharged surgery by 3000'
-pdf_filename = "compensation_letter.pdf"
-generate_letter_pdf(text, pdf_filename)
-print(f"PDF generated successfully: {pdf_filename}")
