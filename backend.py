@@ -37,12 +37,14 @@ gemini_model = genai.GenerativeModel("gemini-pro")
 app = Flask(__name__)
 
 CORS(app, origins="*")
+emailid="nspd696969@gmail.com"
+
 
 @app.route('/query-prices', methods=['POST'])
 def query_prices():
     procedure_json = request.get_json()
     insurance_provider = procedure_json['insurance_provider']
-    dict = {}
+    dicter = {}
     for procedure in procedure_json['procedures']:
         answer = requests.get("https://www.dolthub.com/api/v1alpha1/dolthub/hospital-price-transparency/master?q=SELECT+Avg%28price%29%0AFROM+%60prices%60+WHERE+CODE%3D\"{}\"+AND+payer+LIKE+\"%25{}%25\"+LIMIT+1000%3B".format(procedure, insurance_provider))
         answer = answer.json()
@@ -51,8 +53,17 @@ def query_prices():
         inner_dict['avg_cost'] = float(answer['rows'][0]['Avg(price)'])
         inner_dict['your_cost'] = procedure_json['procedures'][procedure]
         inner_dict['percent_difference'] = (inner_dict['cost_difference'] / float(procedure_json['procedures'][procedure])) * 100
-        dict[procedure] = inner_dict
-    return jsonify(dict)
+        dicter[procedure] = inner_dict
+    uzer=collection.find_one({'email': emailid })
+    dict=uzer["procedures"]
+    dict.update(dicter)
+    update_operation = {
+        '$set': {
+            'procedures': dict
+        }
+    }
+    collection.update_one({'email': emailid}, update_operation)
+    return jsonify(dicter)
 
 @app.route('/process-audio', methods=['POST'])
 def process_audio():
@@ -112,7 +123,11 @@ def overcharge_chat():
         "tts_output": response.text,
         "tts_output_path": tts_output_path
     })
-
+@app.route('/update_email', methods=['POST'])
+def update_email():
+    data=request.json
+    emailid=data['email']
+    
 @app.route('/image', methods=['POST'])
 def process_image():
     image = request.files['image']
