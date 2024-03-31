@@ -131,7 +131,7 @@ def overcharge_chat():
     if "generate" in final_text and "letter" in final_text:
         return_text = generate_text(str(data_json))
         generate_letter_pdf(return_text, "letter.pdf")
-        return return_text
+        return send_file("letter.pdf")
 
 
     response = gemini_model.generate_content(["You have been provided with data about the patient's procedure and its costs. The accompanying json data contains structured data about each procedure done to the patient, indicated by the CPT code, and its associated information, your_cost represents how much you spent and avg_cost represents the national average. Respond to user queries in plain and simple text, do not exceed more than four sentences.",
