@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const TalkbotPage = () => {
   const [audioRecording, setAudioRecording] = useState(null);
-  const [responseText, setResponseText] = useState('');
-  const [audioUrl, setAudioUrl] = useState('');
+  const [responseText, setResponseText] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
 
   const handleStartRecording = () => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
         const mediaRecorder = new MediaRecorder(stream);
         const chunks = [];
 
-        mediaRecorder.ondataavailable = e => {
+        mediaRecorder.ondataavailable = (e) => {
           chunks.push(e.data);
         };
 
         mediaRecorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'audio/wav' });
+          const blob = new Blob(chunks, { type: "audio/wav" });
           setAudioRecording(blob);
         };
 
@@ -25,29 +26,29 @@ const TalkbotPage = () => {
           mediaRecorder.stop();
         }, 5000); // Adjust recording duration as needed
       })
-      .catch(err => console.error('Error recording audio:', err));
+      .catch((err) => console.error("Error recording audio:", err));
   };
 
   const handleProcessAudio = () => {
     if (!audioRecording) {
-      console.error('No audio recording to process');
+      console.error("No audio recording to process");
       return;
     }
 
     const formData = new FormData();
-    formData.append('audio', audioRecording);
+    formData.append("audio", audioRecording);
 
-    fetch('http://127.0.0.1:5000/process-audio', {
-      method: 'POST',
-      body: formData
+    fetch("http://127.0.0.1:5000/process-audio", {
+      method: "POST",
+      body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-      setResponseText(data.final_text); // Assuming the final text is returned
-      // Assuming the URL to the processed audio is returned in the response
-      setAudioUrl("http://127.0.0.1:5000/audio")
-    })
-    .catch(err => console.error('Error processing audio:', err));
+      .then((response) => response.json())
+      .then((data) => {
+        setResponseText(data.final_text); // Assuming the final text is returned
+        // Assuming the URL to the processed audio is returned in the response
+        setAudioUrl("http://127.0.0.1:5000/audio");
+      })
+      .catch((err) => console.error("Error processing audio:", err));
   };
 
   const handlePlayAudio = () => {
@@ -58,7 +59,7 @@ const TalkbotPage = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Voice-based Talkbot</h1>
       <button onClick={handleStartRecording}>Start Recording</button>
       <button onClick={handleProcessAudio}>Process Audio</button>

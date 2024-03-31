@@ -1,5 +1,5 @@
-import React from 'react';
-import '../styles/splitscreen.css';
+import React from "react";
+import "../styles/splitscreen.css";
 
 function SplitScreen({ left, right }) {
   return (

@@ -1,69 +1,66 @@
 /* Add styles for form elements */
 form {
-    /* Form styles */
-  }
-  form div {
-    margin-bottom: 10px;
-  }
-  form label {
-    margin-right: 10px;
-  }
-  form input {
-    /* Input field styles */
-  }
-  form button {
-    /* Button styles */
-  }
-  .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* This will take up the full viewport height */
-    padding: 20px;
-  }
-  
-  .centered-form {
-    width: 100%; /* Adjust the width as needed */
-    max-width: 400px; /* Example max width */
-    background: #fff; /* Example background color */
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Example box shadow */
-    border-radius: 8px;
-  }
-  
-  /* Continue with your previous form styles */
+  /* Form styles */
+}
+form div {
+  margin-bottom: 10px;
+}
+form label {
+  margin-right: 10px;
+}
+form input {
+  /* Input field styles */
+}
+form button {
+  /* Button styles */
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* This will take up the full viewport height */
+  padding: 20px;
+}
 
+.centered-form {
+  width: 100%; /* Adjust the width as needed */
+  max-width: 400px; /* Example max width */
+  background: #fff; /* Example background color */
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Example box shadow */
+  border-radius: 8px;
+}
 
-  /* Assuming this CSS is part of InsuranceForm.css or InsuranceForm.module.css */
+/* Continue with your previous form styles */
+
+/* Assuming this CSS is part of InsuranceForm.css or InsuranceForm.module.css */
 
 /* Styles for the button container to center the button */
 .button-container {
-    text-align: center; /* Center-align the inline content */
-  }
-  
-  /* Styles for the submit button */
-  .submit-button {
-    background-color: #007bff; /* Bootstrap primary blue by default */
-    color: white;
-    border: none;
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 20px;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-  }
-  
-  /* Hover state for the submit button */
-  .submit-button:hover {
-    background-color: #0056b3; /* A darker shade of blue for the hover state */
-  }
-  
-  /* Additional styles if needed for the form fields */
-  .form-field {
-    border-radius: 4px; /* Rounded corners for form fields */
-  }
-  
+  text-align: center; /* Center-align the inline content */
+}
 
+/* Styles for the submit button */
+.submit-button {
+  background-color: #007bff; /* Bootstrap primary blue by default */
+  color: white;
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Hover state for the submit button */
+.submit-button:hover {
+  background-color: #0056b3; /* A darker shade of blue for the hover state */
+}
+
+/* Additional styles if needed for the form fields */
+.form-field {
+  border-radius: 4px; /* Rounded corners for form fields */
+}
 
 /* InsuranceForm.css */
 
