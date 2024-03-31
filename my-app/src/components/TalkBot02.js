@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import letterPdf from "./letter.pdf"; // Import the local PDF file
 
 const TalkBot02 = () => {
   const [audioRecording, setAudioRecording] = useState(null);
@@ -34,7 +35,7 @@ const TalkBot02 = () => {
               .then((response) => {
                 if (response.headers.get("content-type") === "application/pdf") {
                   // If response is a PDF file, set the PDF URL
-                  setPdfUrl(URL.createObjectURL(response.blob()));
+                  setPdfUrl(letterPdf); // Set the URL of the local PDF file
                 } else {
                   // If response is not a PDF, assume audio file and play it
                   return response.blob();
@@ -70,12 +71,6 @@ const TalkBot02 = () => {
     }
   };
 
-  const openPdfInNewTab = () => {
-    if (pdfUrl) {
-      window.open(pdfUrl, "_blank");
-    }
-  };
-
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Voice-based Talkbot</h1>
@@ -97,10 +92,10 @@ const TalkBot02 = () => {
       {/* Conditionally render the PDF */}
       {pdfUrl && (
         <div>
-          <button onClick={openPdfInNewTab} style={{ marginTop: "10px" }}>
+          <button onClick={() => window.open(pdfUrl, "_blank")} style={{ marginTop: "10px" }}>
             Open PDF
           </button>
-          <iframe src={pdfUrl} width="100%" height="500px" />
+          <iframe title="pdfViewer" src={pdfUrl} width="100%" height="500px" />
         </div>
       )}
     </div>
