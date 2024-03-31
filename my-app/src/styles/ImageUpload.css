@@ -19,3 +19,66 @@
   color: #007bff; /* Inverted text color */
   border: 1px solid #007bff; /* Border to maintain the size */
 }
+
+.form-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Space between the buttons */
+}
+
+/* Style for the label that covers the file input */
+.btn-file-input {
+  display: inline-block; /* Allows us to set width and padding */
+  padding: 10px 20px; /* Padding should match the button */
+  background-color: #007bff; /* Button color */
+  color: white; /* Text color */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Indicates clickable */
+  font-size: 1rem; /* Match font size of the button */
+  font-weight: bold; /* Match font weight of the button */
+  text-align: center; /* Center the text */
+  margin: 0; /* Remove default margin */
+  width: 150px; /* Match width with the button */
+  border: 1px solid transparent; /* Match border to maintain the same size */
+  line-height: 1.5; /* Ensure line height matches that of buttons for alignment */
+  transition: background-color 0.2s; /* Smooth transition for hover */
+}
+
+/* Hidden actual file input */
+.file-input {
+  display: none; /* Hide the actual file input */
+}
+
+/* Button styles */
+.btn-upload {
+  padding: 10px 20px; /* Padding to match file input label */
+  background-color: #007bff; /* Primary button color */
+  color: white; /* Text color */
+  border: 1px solid transparent; /* Match border style */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Indicates clickable */
+  font-size: 1rem; /* Ensures text size matches */
+  font-weight: bold; /* Match font weight */
+  width: 150px; /* Width to match file input label */
+  line-height: 1.5; /* Ensures line height for vertical alignment */
+  transition: background-color 0.2s; /* Smooth transition for hover */
+}
+
+/* Hover effects for both */
+.btn-file-input:hover,
+.btn-upload:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Active state when the button is pressed */
+.btn-upload:active {
+  transform: scale(0.98); /* Slight push effect */
+}
+
+/* Disabled state for both */
+.btn-file-input:disabled,
+.btn-upload:disabled {
+  background-color: #cccccc; /* Disabled state color */
+  cursor: not-allowed; /* Change cursor for disabled state */
+}

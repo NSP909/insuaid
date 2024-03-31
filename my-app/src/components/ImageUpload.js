@@ -85,7 +85,7 @@ const UploadAndDisplayImage = () => {
         }}
       >
         <FaMoneyBillAlt size={150} />
-        <h1 style={{ marginTop: "20px" }}> CPTAid </h1>
+        <h1 style={{ marginTop: "20px" }}> Feeasco </h1>
         <h1> Medical Bill Error Detector </h1>
 
         <div onClick={goToTalkBot} className="div-button">
@@ -161,14 +161,19 @@ const UploadAndDisplayImage = () => {
             </div>
           )}
 
-          <div className="form-group mt-3">
+          <div className="form-group mt-4">
             <input
-              className="form-control-file"
+              id="fileInput"
+              className="file-input"
               type="file"
               name="myImage"
               onChange={(event) => setSelectedImage(event.target.files[0])}
+              style={{ display: "none" }} // Hide the actual file input
             />
-            <button className="btn btn-primary mt-2" onClick={uploadImage}>
+            <label htmlFor="fileInput" className="btn btn-file-input">
+              Choose File
+            </label>
+            <button className="btn btn-upload" onClick={uploadImage}>
               Upload Image
             </button>
           </div>
