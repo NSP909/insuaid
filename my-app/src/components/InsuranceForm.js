@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UploadImagePage from './UploadImagePage';
-import '../InsuranceForm.css'; // Make sure to import the CSS
+import '../styles/InsuranceForm.css'; // Make sure to import the CSS
 import { useAuth0 } from '@auth0/auth0-react';
 
 
