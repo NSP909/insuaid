@@ -106,23 +106,24 @@ def overcharge_chat():
     #     data_json = json.load(f)
     #     f.close()
     # data = json.dumps(data_json)
-    data_json = request.files['data']
-    data = json.load(data_json)
+    data_json = get_history()
+    data_json=data_json['procedures']
+    
 
     # Use FasterWhisper to convert audio to text
     segments, info = audio_model.transcribe("audio.mp3", beam_size=5)
     final_text = "Explain where I have been overcharged and what I can do about it."
-    for segment in segments:
-       final_text += segment.text
+    #for segment in segments:
+       #final_text += segment.text
     with open("insuaid/target/directions.txt", "r") as file:
         directions_contents = file.read()
         # Add contents to a string or perform any other operations
 
     if "generate" in final_text and "letter" in final_text:
-        return generate_text(data)
+        return generate_text(data_json)
 
     response = gemini_model.generate_content(["You are a bot that will help the patient with queries they have about being overcharged by the hospital. You have been provided with data about the patient's procedure and its costs. The accompanying json data contains structured data as follows: the outer keys are the CPT codes for every procedure the patient went through. The inner keys are: 'avg_cost': national average cost of procedure with given health provider, 'your_cost': cost for patient, 'cost_difference': difference in costs, 'percent_difference': percent difference in costs. Respond to user queries in plain and simple text, do not exceed more than four sentences. Only use the provided data to give information.", 
-                                              data, "This is the user's query: " + final_text, "This was your previous answer (ignore if empty): " + history, "Suggest writing a letter to the hospital's billing department to request a refund for the overcharge.", "This is a set of general directions that the user can do to help with the overcharge: " + directions_contents])
+                                              str(data_json), "This is the user's query: " + final_text, "This was your previous answer (ignore if empty): " + history, "Suggest writing a letter to the hospital's billing department to request a refund for the overcharge.", "This is a set of general directions that the user can do to help with the overcharge: " + directions_contents])
     #ping gemini for the answer
 
     tts_output_path = "sample_output.wav"
@@ -181,6 +182,7 @@ def add_user():
     else:
         return jsonify({"error": "Failed to add user"}), 500
 def get_history():
+    print(collection.find_one({'email': emailid}))
     return collection.find_one({'email': emailid})
 if __name__ == '__main__':
     app.run(debug = False)
