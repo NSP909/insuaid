@@ -88,6 +88,9 @@ const UploadAndDisplayImage = () => {
         <h1 style={{ marginTop: "20px" }}> CPTAid </h1>
         <h1> Medical Bill Error Detector </h1>
 
+        <div onClick={goToTalkBot} className="div-button">
+          Know more about Insurances.
+        </div>
         {textData &&
           Object.entries(textData)
             .filter(
@@ -113,11 +116,8 @@ const UploadAndDisplayImage = () => {
                   </span>
                 </p>
                 <div className="talkbotbuttons">
-                  <div onClick={goToTalkBot} className="div-button">
-                    Get Assistance
-                  </div>
                   <div onClick={goToTalkBot02} className="div-button">
-                    Get Assistance from Bot 02
+                    Get Personalized Assistance
                   </div>
                 </div>
               </div>

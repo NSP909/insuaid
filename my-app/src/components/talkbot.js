@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/TalkBot.css";
 
 const TalkbotPage = () => {
   const [audioRecording, setAudioRecording] = useState(null);
@@ -60,19 +61,29 @@ const TalkbotPage = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Voice-based Talkbot</h1>
-      <button onClick={handleRecording}>
+    <div className="talkbot-container">
+      <h1 className="talkbot-title">Voice-based Talkbot</h1>
+      <button
+        onClick={handleRecording}
+        className={`talkbot-button ${isRecording ? "recording" : ""}`}
+      >
         {!isRecording ? "Start Recording" : "Stop Recording & Process Audio"}
+        {isRecording && <span className="recording-indicator"></span>}
       </button>
       <br />
-      {responseText && <p>Response: {responseText}</p>}
+      {responseText && (
+        <p className="talkbot-response">Response: {responseText}</p>
+      )}
       <div>
         {/* Render Play Audio button only if audio is not currently playing */}
         {isPlaying ? (
           <p>Playing audio...</p>
         ) : (
-          <button disabled={isRecording} onClick={handleRecording}>
+          <button
+            disabled={isRecording}
+            onClick={handleRecording}
+            className="talkbot-button"
+          >
             {!isRecording ? "Record and Play Audio" : "Recording..."}
           </button>
         )}
