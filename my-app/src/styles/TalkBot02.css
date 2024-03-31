@@ -1,0 +1,82 @@
+.talkbot-container {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.content-container {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.talkbot-title {
+  font-size: 2.4rem;
+  color: #205493;
+  margin-bottom: 20px;
+}
+
+.talkbot-description {
+  font-size: 1.2rem;
+  color: #4a4a4a;
+  margin-bottom: 30px;
+}
+
+.talkbot-controls {
+  margin-bottom: 20px;
+}
+
+.talkbot-button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  outline: none;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  margin: 10px;
+}
+
+.talkbot-button:hover {
+  background-color: #0056b3;
+}
+
+.talkbot-button:disabled {
+  background-color: #cccccc;
+}
+
+.talkbot-response {
+  color: #4a4a4a;
+  margin-top: 20px;
+}
+
+.recording-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  margin-left: 10px;
+  animation: recording-blink 1.5s infinite;
+}
+
+@keyframes recording-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.talkbot-audio-feedback {
+  margin-top: 20px;
+}
+
+/* Styling for the PDF viewer */
+.pdf-iframe {
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  height: 500px;
+  width: 100%;
+  margin-top: 20px;
+}

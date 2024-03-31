@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/TalkBot02.css"; // Ensure you have the CSS file linked
 import letterPdf from "./letter.pdf"; // Import the local PDF file
 
 const TalkBot02 = () => {
@@ -24,7 +25,6 @@ const TalkBot02 = () => {
             const blob = new Blob(chunks, { type: "audio/wav" });
             setAudioRecording(blob);
 
-            // Process the audio
             const formData = new FormData();
             formData.append("audio", blob);
 
@@ -33,11 +33,11 @@ const TalkBot02 = () => {
               body: formData,
             })
               .then((response) => {
-                if (response.headers.get("content-type") === "application/pdf") {
-                  // If response is a PDF file, set the PDF URL
-                  setPdfUrl(letterPdf); // Set the URL of the local PDF file
+                if (
+                  response.headers.get("content-type") === "application/pdf"
+                ) {
+                  setPdfUrl(letterPdf);
                 } else {
-                  // If response is not a PDF, assume audio file and play it
                   return response.blob();
                 }
               })
@@ -46,7 +46,6 @@ const TalkBot02 = () => {
                   const audio = new Audio(URL.createObjectURL(blob));
                   audio.play();
                   setIsPlaying(true);
-                  // Set a timeout to reset isPlaying state after the audio finishes playing
                   audio.addEventListener("ended", () => {
                     setIsPlaying(false);
                   });
@@ -58,46 +57,61 @@ const TalkBot02 = () => {
           };
 
           mediaRecorder.start();
-          setTimeout(() => {
-            mediaRecorder.stop();
-          }, 5000); // Adjust recording duration as needed
+          setTimeout(() => mediaRecorder.stop(), 5000);
 
           setIsRecording(true);
         })
         .catch((err) => console.error("Error recording audio:", err));
     } else {
-      // Stop the recording
       setIsRecording(false);
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Voice-based Talkbot</h1>
-      <button onClick={handleRecording}>
-        {!isRecording ? "Start Recording" : "Stop Recording & Process Audio"}
-      </button>
-      <br />
-      {responseText && <p>Response: {responseText}</p>}
-      <div>
-        {/* Render Play Audio button only if audio is not currently playing */}
-        {isPlaying ? (
-          <p>Playing audio...</p>
-        ) : (
-          <button disabled={isRecording} onClick={handleRecording}>
-            {!isRecording ? "Record and Play Audio" : "Recording..."}
+    <div className="talkbot-container">
+      <div className="content-container">
+        <h1 className="talkbot-title">Healthcare Assistant</h1>
+        <p className="talkbot-description">
+          Welcome to your personalized healthcare assistant. Ask any question
+          about your medical bills or health insurance coverage. Our AI is here
+          to offer personalized advice based on the latest healthcare data.
+        </p>
+        <div className="talkbot-controls">
+          <button className="talkbot-button" onClick={handleRecording}>
+            {!isRecording
+              ? "Start Recording"
+              : "Stop Recording & Process Audio"}
           </button>
+          {isRecording && <div className="recording-indicator"></div>}
+        </div>
+        {responseText && (
+          <p className="talkbot-response">Response: {responseText}</p>
+        )}
+        <div className="talkbot-audio-feedback">
+          {isPlaying ? (
+            <p>Playing audio...</p>
+          ) : (
+            <button
+              className="talkbot-button"
+              disabled={isRecording}
+              onClick={handleRecording}
+            >
+              {!isRecording ? "Record and Play Audio" : "Recording..."}
+            </button>
+          )}
+        </div>
+        {pdfUrl && (
+          <div className="talkbot-pdf-viewer">
+            <button
+              className="talkbot-button"
+              onClick={() => window.open(pdfUrl, "_blank")}
+            >
+              Open PDF
+            </button>
+            <iframe title="pdfViewer" src={pdfUrl} className="pdf-iframe" />
+          </div>
         )}
       </div>
-      {/* Conditionally render the PDF */}
-      {pdfUrl && (
-        <div>
-          <button onClick={() => window.open(pdfUrl, "_blank")} style={{ marginTop: "10px" }}>
-            Open PDF
-          </button>
-          <iframe title="pdfViewer" src={pdfUrl} width="100%" height="500px" />
-        </div>
-      )}
     </div>
   );
 };
