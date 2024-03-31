@@ -2,9 +2,20 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FaMoneyBillAlt } from "react-icons/fa";
-import Button from "./Button";
+import { useNavigate } from "react-router-dom";
+
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const navigate = useNavigate();
+
+  const goToTalkBot = () => {
+    navigate("/talkbot"); // The path you defined for TalkBot in your routes
+  };
+
+  const goToTalkBot02 = () => {
+    navigate("/talkbot02"); // The path you defined for TalkBot in your routes
+  };
 
   // 1. ADD: STATE TO STORE RESPONSE TEXT DATA
   const [textData, setTextData] = useState(null);
@@ -75,6 +86,9 @@ const UploadAndDisplayImage = () => {
         <FaMoneyBillAlt size={150} />
         <h1 style={{ marginTop: "20px" }}> CPTAid </h1>
         <h1> Medical Bill Error Detector </h1>
+
+        <div onClick={goToTalkBot}>Get Assistance</div>
+        <div onClick={goToTalkBot02}>Get Assistance from Bot 02</div>
         {textData &&
           Object.entries(textData)
             .filter(
@@ -99,7 +113,7 @@ const UploadAndDisplayImage = () => {
                     {details.percent_difference.toFixed(2)}%
                   </span>
                 </p>
-                <Button to="/talkbot">Go to Talkbot</Button>
+                <div onClick={goToTalkBot}>Get Assistance</div>
               </div>
             ))}
       </div>
@@ -117,8 +131,11 @@ const UploadAndDisplayImage = () => {
         }}
       >
         <div className="text-center">
-          <h2>Get Started with Your Bill Analysis</h2>          
-          <div>Upload your medical bill to check for discrepancies and potential overcharges. Our analysis is quick, secure, and confidential.</div>
+          <h2>Get Started with Your Bill Analysis</h2>
+          <div>
+            Upload your medical bill to check for discrepancies and potential
+            overcharges. Our analysis is quick, secure, and confidential.
+          </div>
 
           {selectedImage && (
             <div className="mt-3">
