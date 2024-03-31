@@ -1,0 +1,24 @@
+.talkbotbuttons {
+}
+
+.div-button {
+  padding: 12px 24px; /* Adjust padding to your preference */
+  background-color: #095d7e; /* Primary button color */
+  color: white; /* Text color */
+  text-align: center; /* Center the text inside the div */
+  border-radius: 8px; /* Rounded corners */
+  display: inline-block; /* Allows it to have dimensions set by padding */
+  cursor: pointer; /* Changes cursor to indicate it's clickable */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+  user-select: none; /* Prevents the text in the button from being selectable */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  margin: 10px;
+}
+
+.div-button:hover {
+  background-color: white; /* Inverted background color */
+  color: #007bff; /* Inverted text color */
+  border: 1px solid #007bff; /* Border to maintain the size */
+}

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import "../styles/ImageUpload.css";
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -87,8 +88,6 @@ const UploadAndDisplayImage = () => {
         <h1 style={{ marginTop: "20px" }}> CPTAid </h1>
         <h1> Medical Bill Error Detector </h1>
 
-        <div onClick={goToTalkBot}>Get Assistance</div>
-        <div onClick={goToTalkBot02}>Get Assistance from Bot 02</div>
         {textData &&
           Object.entries(textData)
             .filter(
@@ -113,7 +112,14 @@ const UploadAndDisplayImage = () => {
                     {details.percent_difference.toFixed(2)}%
                   </span>
                 </p>
-                <div onClick={goToTalkBot}>Get Assistance</div>
+                <div className="talkbotbuttons">
+                  <div onClick={goToTalkBot} className="div-button">
+                    Get Assistance
+                  </div>
+                  <div onClick={goToTalkBot02} className="div-button">
+                    Get Assistance from Bot 02
+                  </div>
+                </div>
               </div>
             ))}
       </div>
