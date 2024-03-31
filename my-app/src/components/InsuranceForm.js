@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import UploadImagePage from './UploadImagePage';
 import '../InsuranceForm.css'; // Make sure to import the CSS
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 const InsuranceForm = () => {
   const [insuranceName, setInsuranceName] = useState('');
   const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  const {user} = useAuth0();
+  const email = user.email;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
       insuranceName,
-      address, // include the address in the formData object
-      // Add other data as needed
+      address, 
+      email,
     };
 
     // Make the POST request with the form data
