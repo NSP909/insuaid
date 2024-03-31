@@ -38,7 +38,7 @@ if response.status_code == 200:
         "user_id": user['user_id'],
         "name": user['name'],
         "email": user['email'],
-        "procedures":""
+        "procedures":{"dummy":"dummy"}
         }
         print(user_data)
         db["users"].insert_one(user_data)
