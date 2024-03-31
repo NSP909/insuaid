@@ -5,14 +5,14 @@
 
 .left-pane {
   background-color: white;
-  color: #00008b;
+  color: #095d7e;
   padding: 150px;
   flex: 1;
   overflow: auto;
 }
 
 .right-pane {
-  background-color: #00008b;
+  background-color: #095d7e;
   color: white;
   padding: 150px;
   flex: 1;
