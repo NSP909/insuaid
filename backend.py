@@ -86,7 +86,7 @@ def process_audio():
     if "remove" in final_text and "address" in final_text:
         return "remove_address"
 
-    response = gemini_model.generate_content([final_text, "You are a general support assistant for users. You can help educate them and support privacy and security practices on the internet. You also teach users about how they can resolve billing disuputes with hospitals. You also answer any general purpose finance related query of the user. Don't include any extra formatting for text. Keep responses limited to 5 lines."])
+    response = gemini_model.generate_content([final_text, "You are a general support assistant for users. You can help educate them and support privacy and security practices on the internet. You also teach users about how they can resolve billing disuputes with hospitals. You also answer any general purpose insurance related query of the user. Don't include any extra formatting for text. Keep responses limited to 5 lines."])
     #ping gemini for the answer
 
     tts_output_path = r"C:\Users\sange\OneDrive\Desktop\hackp\sample_output.wav"
@@ -123,17 +123,13 @@ def overcharge_chat():
 
     if "generate" in final_text and "letter" in final_text:
         return_text = generate_text(str(data_json))
-        generate_letter_pdf(return_text, "letter.pdf")
-        response = make_response(send_file("letter.pdf"))
+        generate_letter_pdf(return_text, r"C:\Users\sange\OneDrive\Desktop\hackp\letter.pdf")
+        response = make_response(send_file(r"C:\Users\sange\OneDrive\Desktop\hackp\letter.pdf"))
         response.headers['content-type'] = 'application/pdf'
-        return return_text
+        return response
 
     print(final_text)
 
-    if "generate" in final_text and "letter" in final_text:
-        return_text = generate_text(str(data_json))
-        generate_letter_pdf(return_text, "letter.pdf")
-        return send_file("letter.pdf")
 
 
     response = gemini_model.generate_content(["You have been provided with data about the patient's procedure and its costs. The accompanying json data contains structured data about each procedure done to the patient, indicated by the CPT code, and its associated information, your_cost represents how much you spent and avg_cost represents the national average. Respond to user queries in plain and simple text, do not exceed more than four sentences.",

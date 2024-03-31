@@ -70,6 +70,12 @@ const TalkBot02 = () => {
     }
   };
 
+  const openPdfInNewTab = () => {
+    if (pdfUrl) {
+      window.open(pdfUrl, "_blank");
+    }
+  };
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Voice-based Talkbot</h1>
@@ -89,7 +95,13 @@ const TalkBot02 = () => {
         )}
       </div>
       {/* Conditionally render the PDF */}
-      {pdfUrl && <iframe src={pdfUrl} width="100%" height="500px" />}
+      {pdfUrl && (
+        <div>
+          <button onClick={openPdfInNewTab}>Open PDF</button>
+          <br />
+          <iframe src={pdfUrl} width="100%" height="500px" />
+        </div>
+      )}
     </div>
   );
 };
