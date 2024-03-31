@@ -4,6 +4,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+
+  // 1. ADD: STATE TO STORE RESPONSE TEXT DATA 
+  const [textData, setTextData] = useState(null);
+
   const { user } = useAuth0(); 
   const uploadImage = async () => {
     // clicking this button will send image to server 
@@ -38,6 +42,10 @@ const UploadAndDisplayImage = () => {
         throw new Error("Failed to upload image");
       }
       const textData = await response.json();
+
+      // 2. UPDATE STATE
+      setTextData(textData);
+
       console.log("Received JSON from backend:", textData);
 
       // todo: handle success response 
@@ -54,6 +62,20 @@ const UploadAndDisplayImage = () => {
       <div className="text-center">
         <h1>Upload a copy of your provisional bill below.</h1>
         <h3>This will allow us to scan for bill errors or discrepancies.</h3>
+
+        {textData && Object.entries(textData).map(([code, details]) => (
+        <div key={code}>
+        <p><strong>Code:</strong> {code}</p>
+        <p><strong>Your Cost:</strong> ${details.your_cost}</p>
+        <p><strong>Average Cost:</strong> ${details.avg_cost.toFixed(2)}</p>
+        <p>
+        <strong>Percent Difference:</strong> 
+        <span style={{ color: details.percent_difference < 0 ? 'red' : 'green' }}>
+          {details.percent_difference.toFixed(2)}%
+        </span>
+        </p>
+      </div>
+    ))}
 
         {selectedImage && (
           <div className="mt-3">
