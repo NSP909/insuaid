@@ -89,10 +89,10 @@ def process_audio():
     response = gemini_model.generate_content([final_text, "You are a general support assistant for users. You can help educate them and support privacy and security practices on the internet. You also teach users about how they can resolve billing disuputes with hospitals. You also answer any general purpose finance related query of the user. Don't include any extra formatting for text. Keep responses limited to 5 lines."])
     #ping gemini for the answer
 
-    tts_output_path = "sample_output.wav"
+    tts_output_path = r"C:\Users\sange\OneDrive\Desktop\hackp\sample_output.wav"
     tts.tts_to_file(response.text, file_path=tts_output_path)
 
-    return send_file("sample_output.wav")
+    return send_file(tts_output_path )
 
 @app.route("/get-audio", methods = ['GET'])
 def get_audio():

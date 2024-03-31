@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const TalkbotPage = () => {
   const [audioRecording, setAudioRecording] = useState(null);
   const [responseText, setResponseText] = useState("");
-  const [audioUrl, setAudioUrl] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -31,13 +30,19 @@ const TalkbotPage = () => {
               method: "POST",
               body: formData,
             })
-              .then((response) => response.json())
-              .then((data) => {
-                setResponseText(data.final_text);
-                // Set the URL of the processed audio file received from the backend
-                setAudioUrl(data.audio_url);
+              .then((response) => response.blob())
+              .then((blob) => {
+                const audio = new Audio(URL.createObjectURL(blob));
+                audio.play();
+                setIsPlaying(true);
+                // Set a timeout to reset isPlaying state after the audio finishes playing
+                audio.addEventListener("ended", () => {
+                  setIsPlaying(false);
+                });
               })
-              .catch((err) => console.error("Error processing audio:", err));
+              .catch((err) =>
+                console.error("Error processing and playing audio:", err)
+              );
           };
 
           mediaRecorder.start();
@@ -54,18 +59,6 @@ const TalkbotPage = () => {
     }
   };
 
-  const handlePlayAudio = async () => {
-    const module = await import('./sample_output.wav');
-    const audioFile = module.default;
-    const audio = new Audio(audioFile); // Use the imported audio file
-    audio.play();
-    setIsPlaying(true);
-    // Set a timeout to reset isPlaying state after the audio finishes playing
-    audio.addEventListener('ended', () => {
-      setIsPlaying(false);
-    });
-  };
-
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Voice-based Talkbot</h1>
@@ -73,13 +66,17 @@ const TalkbotPage = () => {
         {!isRecording ? "Start Recording" : "Stop Recording & Process Audio"}
       </button>
       <br />
-      
+      {responseText && <p>Response: {responseText}</p>}
       <div>
         {/* Render Play Audio button only if audio is not currently playing */}
-        {!isPlaying && <button onClick={handlePlayAudio}>Play Audio</button>}
-        {isPlaying && <p>Playing audio...</p>}
+        {isPlaying ? (
+          <p>Playing audio...</p>
+        ) : (
+          <button disabled={isRecording} onClick={handleRecording}>
+            {!isRecording ? "Record and Play Audio" : "Recording..."}
+          </button>
+        )}
       </div>
-      {responseText && <p>Response: {responseText}</p>}
     </div>
   );
 };

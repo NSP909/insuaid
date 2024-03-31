@@ -1,7 +1,7 @@
 import UploadAndDisplayImage from "./ImageUpload";
 import AudioRecorder from "./audioRecorder";
 import React, { useEffect } from "react";
-import Button from "./Button";
+
 
 function UploadImagePage() {
   return (
@@ -9,7 +9,7 @@ function UploadImagePage() {
       <header className="App-header">
         <div>
           <UploadAndDisplayImage />
-          <Button to="/talkbot">Go to Talkbot</Button>
+          
         </div>
       </header>
     </div>

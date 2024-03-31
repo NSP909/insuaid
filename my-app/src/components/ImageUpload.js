@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FaMoneyBillAlt } from "react-icons/fa";
-
+import Button from "./Button";
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -99,6 +99,7 @@ const UploadAndDisplayImage = () => {
                     {details.percent_difference.toFixed(2)}%
                   </span>
                 </p>
+                <Button to="/talkbot">Go to Talkbot</Button>
               </div>
             ))}
       </div>
