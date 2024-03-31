@@ -141,11 +141,8 @@ def overcharge_chat():
     print(tts_output_path)
     tts.tts_to_file(response.text, file_path=tts_output_path)
 
-    return jsonify({
-        "final_text": final_text,
-        "tts_output": response.text,
-        "tts_output_path": tts_output_path
-    })
+    return send_file(tts_output_path )
+
 @app.route('/update_email', methods=['POST'])
 def update_email():
     data=request.json
