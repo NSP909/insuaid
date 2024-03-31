@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UploadImagePage from "./UploadImagePage";
-import "../styles/InsuranceForm.css"; // Make sure to import the CSS
+import "../styles/InsuranceForm.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const InsuranceForm = () => {
@@ -52,6 +52,11 @@ const InsuranceForm = () => {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="centered-form">
+        <h5>Almost there!</h5>
+        <div>
+          Please provide us some more basic information to provide personalize
+          and accurate information.
+        </div>
         <div className="form-group">
           <label htmlFor="insuranceName">Insurance Name:</label>
           <input
