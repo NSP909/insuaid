@@ -64,6 +64,12 @@ def process_audio():
     for segment in segments:
         final_text += segment.text
 
+    if "delete" in final_text and ("bill" in final_text or "bills" in final_text):
+        return "delete_bill"
+    
+    if "remove" in final_text and "address" in final_text:
+        return "remove_address"
+
     response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not exceed more than two sentences."])
     #ping gemini for the answer
 
