@@ -11,7 +11,7 @@ import json
 from ocr import get_text_from_image
 from flask_cors import CORS
 from pymongo import MongoClient
-
+from mail import generate_text
 
 
 load_dotenv()
@@ -70,6 +70,42 @@ def process_audio():
     tts.tts_to_file(response.text, file_path="sample_output.wav")
 
     return "sample_output.wav"
+
+@app.route('/overcharge-chat', methods=['POST'])
+def overcharge_chat():
+    request.files['audio'].save("audio.mp3")
+    history = request.form['history']
+    # with open("tp.json") as f:
+    #     data_json = json.load(f)
+    #     f.close()
+    # data = json.dumps(data_json)
+    data_json = request.files['data']
+    data = json.load(data_json)
+
+    # Use FasterWhisper to convert audio to text
+    segments, info = audio_model.transcribe("audio.mp3", beam_size=5)
+    final_text = "Explain where I have been overcharged and what I can do about it."
+    for segment in segments:
+       final_text += segment.text
+    with open("insuaid/target/directions.txt", "r") as file:
+        directions_contents = file.read()
+        # Add contents to a string or perform any other operations
+
+    if "generate" in final_text and "letter" in final_text:
+        return generate_text(data)
+
+    response = gemini_model.generate_content(["You are a bot that will help the patient with queries they have about being overcharged by the hospital. You have been provided with data about the patient's procedure and its costs. The accompanying json data contains structured data as follows: the outer keys are the CPT codes for every procedure the patient went through. The inner keys are: 'avg_cost': national average cost of procedure with given health provider, 'your_cost': cost for patient, 'cost_difference': difference in costs, 'percent_difference': percent difference in costs. Respond to user queries in plain and simple text, do not exceed more than four sentences. Only use the provided data to give information.", 
+                                              data, "This is the user's query: " + final_text, "This was your previous answer (ignore if empty): " + history, "Suggest writing a letter to the hospital's billing department to request a refund for the overcharge.", "This is a set of general directions that the user can do to help with the overcharge: " + directions_contents])
+    #ping gemini for the answer
+
+    tts_output_path = "sample_output.wav"
+    tts.tts_to_file(response.text, file_path=tts_output_path)
+
+    return jsonify({
+        "final_text": final_text,
+        "tts_output": response.text,
+        "tts_output_path": tts_output_path
+    })
 
 @app.route('/image', methods=['POST'])
 def process_image():
