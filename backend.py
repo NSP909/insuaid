@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, send_file
 import requests
 from faster_whisper import WhisperModel
 import torch
@@ -97,6 +97,10 @@ def process_audio():
         "tts_output": response.text,
         "tts_output_path": tts_output_path
     })
+
+@app.route("/get-audio", methods = ['GET'])
+def get_audio():
+    return send_file("insuaid/my-app/src/componenets/sample_output.wav")
 
 @app.route('/overcharge-chat', methods=['POST'])
 def overcharge_chat():
