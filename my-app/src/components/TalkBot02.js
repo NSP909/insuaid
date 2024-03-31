@@ -97,8 +97,9 @@ const TalkBot02 = () => {
       {/* Conditionally render the PDF */}
       {pdfUrl && (
         <div>
-          <button onClick={openPdfInNewTab}>Open PDF</button>
-          <br />
+          <button onClick={openPdfInNewTab} style={{ marginTop: "10px" }}>
+            Open PDF
+          </button>
           <iframe src={pdfUrl} width="100%" height="500px" />
         </div>
       )}
