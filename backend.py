@@ -92,11 +92,7 @@ def process_audio():
     tts_output_path = "sample_output.wav"
     tts.tts_to_file(response.text, file_path=tts_output_path)
 
-    return jsonify({
-        "final_text": final_text,
-        "tts_output": response.text,
-        "tts_output_path": tts_output_path
-    })
+    return send_file("sample_output.wav")
 
 @app.route("/get-audio", methods = ['GET'])
 def get_audio():
