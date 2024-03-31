@@ -165,6 +165,7 @@ def add_user():
         return jsonify({"message": "User added successfully"}), 201
     else:
         return jsonify({"error": "Failed to add user"}), 500
-
+def get_history():
+    return collection.find_one({'email': emailid})
 if __name__ == '__main__':
     app.run(debug = False)
