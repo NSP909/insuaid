@@ -64,7 +64,7 @@ const UploadAndDisplayImage = () => {
       <div
         style={{
           flex: 1,
-          color: "blue",
+          color: "#095d7e",
           backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
@@ -108,7 +108,7 @@ const UploadAndDisplayImage = () => {
         style={{
           flex: 1,
           color: "white",
-          backgroundColor: "darkblue",
+          backgroundColor: "#095d7e",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -116,8 +116,8 @@ const UploadAndDisplayImage = () => {
         }}
       >
         <div className="text-center">
-          <h1>Upload a copy of your provisional bill below.</h1>
-          <h3>This will allow us to scan for bill errors or discrepancies.</h3>
+          <h2>Get Started with Your Bill Analysis</h2>          
+          <div>Upload your medical bill to check for discrepancies and potential overcharges. Our analysis is quick, secure, and confidential.</div>
 
           {selectedImage && (
             <div className="mt-3">

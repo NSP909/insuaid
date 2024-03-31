@@ -31,11 +31,6 @@ form button {
   border-radius: 8px;
 }
 
-/* Continue with your previous form styles */
-
-/* Assuming this CSS is part of InsuranceForm.css or InsuranceForm.module.css */
-
-/* Styles for the button container to center the button */
 .button-container {
   text-align: center; /* Center-align the inline content */
 }
@@ -82,5 +77,3 @@ form button {
   border-radius: 4px; /* Rounded corners for inputs */
   box-sizing: border-box; /* Box sizing to ensure padding doesn't affect width */
 }
-
-/* Continue with other styles... */
