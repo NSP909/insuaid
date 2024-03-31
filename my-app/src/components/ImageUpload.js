@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const { user } = useAuth0(); 
   const uploadImage = async () => {
     // clicking this button will send image to server 
 
@@ -16,6 +17,13 @@ const UploadAndDisplayImage = () => {
     const formData = new FormData();
     formData.append("image", selectedImage); // "file" for backend endpoint 
     formData.append("insurance", "UNITED HEALTHCARE");
+
+    formData.append("userName", user.name); 
+    formData.append("userEmail", user.email); 
+
+    console.log(user.name)
+    console.log(user.email)
+    console.log(formData)
 
     // use HTTP response to send data 
     try {
