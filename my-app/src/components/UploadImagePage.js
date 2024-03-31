@@ -5,7 +5,7 @@ import SplitScreen from './splitScreen';
 import { FaMoneyBillAlt } from 'react-icons/fa';
 
 
-function App() {
+function UploadImagePage() {
   return (
     <div className="App">
       <header className="App-header">
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default UploadImagePage;
