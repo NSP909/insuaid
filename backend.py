@@ -84,9 +84,14 @@ def process_audio():
     response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not exceed more than two sentences."])
     #ping gemini for the answer
 
-    tts.tts_to_file(response.text, file_path="sample_output.wav")
+    tts_output_path = "sample_output.wav"
+    tts.tts_to_file(response.text, file_path=tts_output_path)
 
-    return "sample_output.wav"
+    return jsonify({
+        "final_text": final_text,
+        "tts_output": response.text,
+        "tts_output_path": tts_output_path
+    })
 
 @app.route('/overcharge-chat', methods=['POST'])
 def overcharge_chat():

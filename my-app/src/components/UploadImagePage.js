@@ -12,7 +12,7 @@ function UploadImagePage() {
 
   console.log(user.email)
   useEffect(() => {
-
+    
     const sendEmail = async () => {
       const accessToken = await getAccessTokenSilently();
 
