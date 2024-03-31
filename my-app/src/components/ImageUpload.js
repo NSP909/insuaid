@@ -63,19 +63,21 @@ const UploadAndDisplayImage = () => {
         <h1>Upload a copy of your provisional bill below.</h1>
         <h3>This will allow us to scan for bill errors or discrepancies.</h3>
 
-        {textData && Object.entries(textData).map(([code, details]) => (
-        <div key={code}>
-        <p><strong>Code:</strong> {code}</p>
-        <p><strong>Your Cost:</strong> ${details.your_cost}</p>
-        <p><strong>Average Cost:</strong> ${details.avg_cost.toFixed(2)}</p>
-        <p>
+        {textData && Object.entries(textData)
+  .filter(([code, details]) => details.percent_difference < 0 && Math.abs(details.percent_difference) > 10)
+  .map(([code, details]) => (
+    <div key={code}>
+      <p><strong>Code:</strong> {code}</p>
+      <p><strong>Your Cost:</strong> ${details.your_cost}</p>
+      <p><strong>Average Cost:</strong> ${details.avg_cost.toFixed(2)}</p>
+      <p>
         <strong>Percent Difference:</strong> 
-        <span style={{ color: details.percent_difference < 0 ? 'red' : 'green' }}>
+        <span style={{ color: 'red' }}>
           {details.percent_difference.toFixed(2)}%
         </span>
-        </p>
-      </div>
-    ))}
+      </p>
+    </div>
+))}
 
         {selectedImage && (
           <div className="mt-3">
