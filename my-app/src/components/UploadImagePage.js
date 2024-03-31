@@ -2,7 +2,6 @@ import UploadAndDisplayImage from './ImageUpload';
 import AudioRecorder from './audioRecorder';
 import InsuranceInfoForm from './insuranceRequest';
 import SplitScreen from './splitScreen';
-import { FaMoneyBillAlt } from 'react-icons/fa';
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -39,8 +38,6 @@ function UploadImagePage() {
       <header className="App-header">
       
       <div>
-        <FaMoneyBillAlt size={150} /> 
-        <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
         <UploadAndDisplayImage> </UploadAndDisplayImage>
         <AudioRecorder/>  
 

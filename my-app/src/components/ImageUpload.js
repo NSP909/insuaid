@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from "@auth0/auth0-react";
+import { FaMoneyBillAlt } from 'react-icons/fa';
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,6 +62,8 @@ const UploadAndDisplayImage = () => {
 <div style={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
       {/* Left half (White background) */}
       <div style={{ flex: 1, backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <FaMoneyBillAlt size={150} /> 
+        <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
         <h1> Medical Bill Error Detector </h1>
       {textData && Object.entries(textData)
             .filter(([code, details]) => details.percent_difference < 0 && Math.abs(details.percent_difference) > 10)
