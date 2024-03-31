@@ -55,8 +55,13 @@ def query_prices():
         inner_dict['percent_difference'] = (inner_dict['cost_difference'] / float(procedure_json['procedures'][procedure])) * 100
         dicter[procedure] = inner_dict
     uzer=collection.find_one({'email': emailid })
-    dict=uzer["procedures"]
-    dict.update(dicter)
+    if uzer.get("procedures") is not None:
+        dict = uzer["procedures"]
+        dict.update(dicter)
+    else:
+    # Handle the case where `uzer["procedures"]` is None
+        dict = dicter
+
     update_operation = {
         '$set': {
             'procedures': dict
