@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from "@auth0/auth0-react";
+import { FaMoneyBillAlt } from 'react-icons/fa';
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -58,55 +59,54 @@ const UploadAndDisplayImage = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="text-center">
-        <h1>Upload a copy of your provisional bill below.</h1>
-        <h3>This will allow us to scan for bill errors or discrepancies.</h3>
+<div style={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
+      {/* Left half (White background) */}
+      <div style={{ flex: 1, backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <FaMoneyBillAlt size={150} /> 
+        <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
+        <h1> Medical Bill Error Detector </h1>
+      {textData && Object.entries(textData)
+            .filter(([code, details]) => details.percent_difference < 0 && Math.abs(details.percent_difference) > 10)
+            .map(([code, details]) => (
+              <div key={code}>
+                <p><strong>Code:</strong> {code}</p>
+                <p><strong>Your Cost:</strong> ${details.your_cost}</p>
+                <p><strong>Average Cost:</strong> ${details.avg_cost.toFixed(2)}</p>
+                <p>
+                  <strong>Percent Difference:</strong> 
+                  <span style={{ color: 'red' }}>
+                    {details.percent_difference.toFixed(2)}%
+                  </span>
+                </p>
+              </div>
+          ))}
+      </div>
 
-        {textData && Object.entries(textData)
-  .filter(([code, details]) => details.percent_difference < 0 && Math.abs(details.percent_difference) > 10)
-  .map(([code, details]) => (
-    <div key={code}>
-      <p><strong>Code:</strong> {code}</p>
-      <p><strong>Your Cost:</strong> ${details.your_cost}</p>
-      <p><strong>Average Cost:</strong> ${details.avg_cost.toFixed(2)}</p>
-      <p>
-        <strong>Percent Difference:</strong> 
-        <span style={{ color: 'red' }}>
-          {details.percent_difference.toFixed(2)}%
-        </span>
-      </p>
-    </div>
-))}
+      {/* Right half (Blue background) */}
+      <div style={{ flex: 1, backgroundColor: 'darkblue', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className="text-center">
+          <h1>Upload a copy of your provisional bill below.</h1>
+          <h3>This will allow us to scan for bill errors or discrepancies.</h3>
 
-        {selectedImage && (
-          <div className="mt-3">
-            <img
-              alt="Selected"
-              width={"250px"}
-              src={URL.createObjectURL(selectedImage)}
-              className="img-thumbnail"
-            />
-            <br />
-            <button className="btn btn-danger mt-2" onClick={() => setSelectedImage(null)}>Remove Image</button>
+       
+
+          {selectedImage && (
+            <div className="mt-3">
+              <img alt="Selected" width={"250px"} src={URL.createObjectURL(selectedImage)} className="img-thumbnail"/>
+              <br />
+              <button className="btn btn-danger mt-2" onClick={() => setSelectedImage(null)}>Remove Image</button>
+            </div>
+          )}
+
+          <div className="form-group mt-3">
+            <input className="form-control-file" type="file" name="myImage" onChange={(event) => setSelectedImage(event.target.files[0])}/>
+            <button className="btn btn-primary mt-2" onClick={uploadImage}>Upload Image</button>
           </div>
-        )}
-
-        <div className="form-group mt-3">
-          <input
-            className="form-control-file"
-            type="file"
-            name="myImage"
-            onChange={(event) => {
-              console.log(event.target.files[0]);
-              setSelectedImage(event.target.files[0]);
-            }}
-          />
-          <button className="btn btn-primary mt-2" onClick={uploadImage}>Upload Image</button>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default UploadAndDisplayImage;
