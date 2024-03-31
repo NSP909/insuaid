@@ -13,6 +13,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 
 
+
 load_dotenv()
 
 uri=os.getenv("mongo")
