@@ -86,7 +86,7 @@ def process_audio():
     if "remove" in final_text and "address" in final_text:
         return "remove_address"
 
-    response = gemini_model.generate_content([final_text, "You are a patient support assistant. You are tasked with helping patients with figuring out their hospital bill related queries. Respond in plain and simple text, do not exceed more than two sentences."])
+    response = gemini_model.generate_content([final_text, "You are a general support assistant for users. You can help educate them and support privacy and security practices on the internet. You also teach users about how they can resolve billing disuputes with hospitals. You also answer any general purpose finance related query of the user."])
     #ping gemini for the answer
 
     tts_output_path = "sample_output.wav"
