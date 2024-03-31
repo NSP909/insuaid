@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response, send_file
+from flask import Flask, request, jsonify, Response, send_file, make_response
 import requests
 from faster_whisper import WhisperModel
 import torch
@@ -124,6 +124,8 @@ def overcharge_chat():
     if "generate" in final_text and "letter" in final_text:
         return_text = generate_text(str(data_json))
         generate_letter_pdf(return_text, "letter.pdf")
+        response = make_response(send_file("letter.pdf"))
+        response.headers['content-type'] = 'application/pdf'
         return return_text
 
     print(final_text)
