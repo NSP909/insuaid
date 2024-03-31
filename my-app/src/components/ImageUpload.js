@@ -61,7 +61,7 @@ const UploadAndDisplayImage = () => {
   return (
 <div style={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
       {/* Left half (White background) */}
-      <div style={{ flex: 1, backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ flex: 1, color: "blue", backgroundColor: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <FaMoneyBillAlt size={150} /> 
         <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
         <h1> Medical Bill Error Detector </h1>
@@ -83,7 +83,7 @@ const UploadAndDisplayImage = () => {
       </div>
 
       {/* Right half (Blue background) */}
-      <div style={{ flex: 1, backgroundColor: 'darkblue', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ flex: 1, color: "white", backgroundColor: 'darkblue', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <div className="text-center">
           <h1>Upload a copy of your provisional bill below.</h1>
           <h3>This will allow us to scan for bill errors or discrepancies.</h3>
