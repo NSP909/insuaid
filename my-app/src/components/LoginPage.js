@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      navigate('/upload');
+      navigate('/profile');
     }
   }, [isAuthenticated, navigate]);
 

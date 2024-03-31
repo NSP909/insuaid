@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginPage from './components/LoginPage';
 import UploadImagePage from './components/UploadImagePage';
+import InsuranceForm from './components/InsuranceForm';
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
@@ -12,8 +13,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route 
-          path="/upload" 
-          element={isAuthenticated ? <UploadImagePage /> : <Navigate to="/" />} 
+          path="/profile" 
+          element={isAuthenticated ? <InsuranceForm /> : <Navigate to="/" />} 
         />
       </Routes>
     </Router>
