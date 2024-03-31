@@ -37,7 +37,7 @@ gemini_model = genai.GenerativeModel("gemini-pro")
 app = Flask(__name__)
 
 CORS(app, origins="*")
-emailid="nspd696969@gmail.com"
+
 
 
 @app.route('/query-prices', methods=['POST'])
@@ -126,7 +126,10 @@ def overcharge_chat():
 @app.route('/update_email', methods=['POST'])
 def update_email():
     data=request.json
+    print(data['email'])
+    global emailid
     emailid=data['email']
+    return "email updated"
     
 @app.route('/image', methods=['POST'])
 def process_image():

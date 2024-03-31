@@ -17,7 +17,7 @@ function UploadImagePage() {
     const sendEmail = async () => {
       const accessToken = await getAccessTokenSilently();
 
-      await fetch('http://127.0.0.1:5000/updateemail', {
+      await fetch('http://127.0.0.1:5000/update_email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
