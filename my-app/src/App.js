@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/" element={<LoginPage />} />
         <Route
           path="/profile"
-          element={isAuthenticated ? <TalkbotPage /> : <Navigate to="/" />}
+          element={isAuthenticated ? <InsuranceForm /> : <Navigate to="/" />}
         />
         <Route path="/talkbot" element={<TalkbotPage />} />
         <Route path="/talkbot02" element={<TalkBot02 />} />

@@ -17,7 +17,7 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <img src={logo} alt="Company Logo" className="logo" />
-      <h1>Welcome to Fair Charge!</h1>
+      <h1>Welcome to Feeasco!</h1>
       <p>Click below to sign in to your account securely.</p>
       <button onClick={() => loginWithRedirect()} className="login-button">
         Log In
