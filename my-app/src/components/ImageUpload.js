@@ -80,7 +80,7 @@ const UploadAndDisplayImage = () => {
       </div>
 
       {/* Right half (Blue background) */}
-      <div style={{ flex: 1, backgroundColor: 'lightblue', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ flex: 1, backgroundColor: 'darkblue', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div className="text-center">
           <h1>Upload a copy of your provisional bill below.</h1>
           <h3>This will allow us to scan for bill errors or discrepancies.</h3>

@@ -41,10 +41,7 @@ function UploadImagePage() {
       <div>
         <FaMoneyBillAlt size={150} /> 
         <h1 style={{marginTop: '20px'}}> CPTAid </h1> 
-        <h2> Medical Bill Error Detector </h2> 
-
         <UploadAndDisplayImage> </UploadAndDisplayImage>
-        <InsuranceInfoForm /> 
         <AudioRecorder/>  
 
       </div>
